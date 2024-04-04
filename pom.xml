@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.openliberty.yarn.shop</groupId>
+	<artifactId>jakarta-data-yarn-shop</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<name>jakarta-data-yarn-shop</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+
+		<!-- Liberty configuration -->
+		<liberty.var.http.port>9080</liberty.var.http.port>
+		<liberty.var.https.port>9443</liberty.var.https.port>
+	</properties>
+
+	<dependencies>
+		<!-- Provided dependencies -->
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-api</artifactId>
+			<version>11.0.0-M1</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>jakarta.data</groupId>
+					<artifactId>jakarta-data-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.data</groupId>
+			<artifactId>jakarta.data-api</artifactId>
+			<version>1.0.0-M4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.nosql</groupId>
+			<artifactId>jakarta.nosql-api</artifactId>
+			<version>1.0.0-M1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- For tests -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.10.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.microshed</groupId>
+			<artifactId>microshed-testing-testcontainers</artifactId>
+			<version>0.9.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.microshed</groupId>
+			<artifactId>microshed-testing-core-jakarta</artifactId>
+			<version>0.9.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>1.19.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mongodb</artifactId>
+			<version>1.19.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Drivers -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jnosql.databases</groupId>
+			<artifactId>jnosql-mongodb</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Liberty dev plugin -->
+			<plugin>
+				<groupId>io.openliberty.tools</groupId>
+				<artifactId>liberty-maven-plugin</artifactId>
+				<version>3.9</version>
+				<configuration>
+					<install>
+						<runtimeUrl>
+							https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2024-03-25_1100/openliberty-all-24.0.0.4-cl240420240325-1100.zip
+						</runtimeUrl>
+					</install>
+					<copyDependencies>
+						<location>
+							${project.build.directory}/liberty/wlp/usr/shared/resources/postgresql
+						</location>
+						<dependency>
+							<groupId>org.postgresql</groupId>
+							<artifactId>postgresql</artifactId>
+						</dependency>
+					</copyDependencies>
+					<copyDependencies>
+						<location>
+							${project.build.directory}/liberty/wlp/usr/shared/resources/mongodb
+						</location>
+						<dependency>
+							<groupId>org.eclipse.jnosql.databases</groupId>
+							<artifactId>jnosql-mongodb</artifactId>
+						</dependency>
+					</copyDependencies>
+				</configuration>
+			</plugin>
+			<!-- War plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.4.0</version>
+			</plugin>
+			<!-- Surefire plugin (unit tests) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+			</plugin>
+			<!-- Failsafe plugin (functional tests) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<systemPropertyVariables>
+						<http.port>${liberty.var.http.port}</http.port>
+						<context.root>/dev</context.root>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
