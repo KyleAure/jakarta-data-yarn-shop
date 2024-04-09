@@ -16,19 +16,15 @@ public class Yarn {
 	private long id;
 	
 	@jakarta.nosql.Column
-    @PositiveOrZero
 	private int stock;
 	
 	@jakarta.nosql.Column
-	@Positive
 	private long cost;
 	
 	@jakarta.nosql.Column
-	@NotBlank
 	private String brand;
 	
 	@jakarta.nosql.Column
-	@NotBlank
 	private String colorway;
 	
 	@jakarta.nosql.Column

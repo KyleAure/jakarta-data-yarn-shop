@@ -13,17 +13,17 @@ public class PurchaseOrder {
 	private UUID id;
 
 	private String username;
-	private LocalDateTime purchasedDate;
+	private LocalDateTime date;
 
 	private List<Item> items;
 
 	private int versionNum;
 
-	public PurchaseOrder(UUID id, String username, LocalDateTime purchasedDate, List<Item> items, int versionNum) {
+	public PurchaseOrder(UUID id, String username, LocalDateTime date, List<Item> items, int versionNum) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.purchasedDate = purchasedDate;
+		this.date = date;
 		this.items = items;
 		this.versionNum = versionNum;
 	}

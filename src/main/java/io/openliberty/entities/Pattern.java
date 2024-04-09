@@ -6,8 +6,6 @@ import java.net.URL;
 
 @io.openliberty.anno.Entity
 public record Pattern (
-		long id, 
-		String name, 
-		String author, 
-		double cost, 
-		URL link) { }
+		long id, String name, 
+		String author, double cost, 
+		URL link ) { }

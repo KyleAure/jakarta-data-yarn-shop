@@ -17,11 +17,12 @@ public class _Pattern {
 	public static final String COST = "cost";
 	public static final String LINK = "link";
 	
+	public static final Attribute<Pattern> link	= new AttributeRecord<>(LINK);
+	
 	public static final SortableAttribute<Pattern> id = new SortableAttributeRecord<>(ID);
 	public static final SortableAttribute<Pattern> cost = new SortableAttributeRecord<>(COST);
 	
 	public static final TextAttribute<Pattern> name = new TextAttributeRecord<>(NAME);
 	public static final TextAttribute<Pattern> author = new TextAttributeRecord<>(AUTHOR);
 	
-	public static final Attribute<Pattern> link	= new AttributeRecord<>(LINK);
 }

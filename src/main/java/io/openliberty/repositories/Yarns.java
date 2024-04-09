@@ -18,6 +18,7 @@ import jakarta.validation.constraints.Size;
 public interface Yarns extends BasicRepository<Yarn, Long> {
 
 	@Size(max = 3)
+	@Valid
 	Yarn[] findFirst3ByStockGreaterThanEqualAndBrandStartsWith(
 			@Positive int minStock, 
 			@NotBlank String brandPrefix, 
